@@ -1,36 +1,44 @@
-import React, {useState, useEffect} from 'react';
-// import products from '../../products';
-import {Row,Col} from 'react-bootstrap';
+import React, {useEffect} from 'react';
+import {Row,Col} from "react-bootstrap";
 import Product from '../Product';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import {useDispatch, useSelector} from "react-redux";
+import { listProducts } from '../../actions/productAction';
+import Loader from '../Loader';
+import Message from '../Message';
 
 function HomeScreen() {
-  const [products, setProducts]= useState([])
-  useEffect(()=>{
-    async function fetchProducts(){
-      const {data} = await axios.get('http://127.0.0.1:8000/api/products/')
-      setProducts(data)
-    }
-    fetchProducts()
-  }, [])
+    const dispatch = useDispatch();
+    const productList = useSelector((state)=>state.productList);
+    const {error,loading,products} =productList
+    useEffect(()=>{
+        dispatch(listProducts());
+    },[dispatch])
 
-  return (
-    <div>
-      <h1 className='text-center'></h1>
-      <h1 className='text-center'>Latest Products</h1>
-      <Row>
-        {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}> 
-                <Link to={`/product/${product._id}`}>
-                <Product product={product} />
-                </Link>
-            </Col>
-        ))}
-      </Row>
-    </div>
-  );
+    return (
+        <div>
+            <h1 className="text-center">Latest Products</h1>
+
+            {loading ?(
+                <Loader />
+            ):error ?(
+              <Message variant='danger'>{error}</Message>
+            ):
+            
+            <Row>
+               {products.map((product)=>(
+                   <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+
+                       {/* <h3>{product.name}</h3> */}
+                       <Product  product={product}/>
+                   </Col>
+               ))} 
+            </Row>
+            
+            
+            }
+            
+        </div>
+    )
 }
 
-export default HomeScreen;
+export default HomeScreen
