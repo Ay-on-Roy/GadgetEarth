@@ -11,7 +11,7 @@
 //       <Navbar bg="dark" variant='dark'>
 //         <Container>
 //           <LinkContainer to="/">
-//             <Navbar.Brand><i className='fas fa-laptop'></i><b> Gadget Shodai</b></Navbar.Brand>
+//             <Navbar.Brand><i className='fas fa-laptop'></i><b> Gadget Earth</b></Navbar.Brand>
 //           </LinkContainer>
 //           <Navbar.Toggle aria-controls="navbarScroll" />
 //           <Navbar.Collapse id="navbarScroll">
